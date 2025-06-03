@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+canvas {
+    background-color: black;
+}
+
+.canvas-container {
+  position: relative;
+  width: 720px;
+  height: 480px;
+}
+
+.background-image {
+    width: 720px;
+    height: 480px;
+    position: absolute;
+    left: 0;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.9s ease;
+}
+
+
+.start-game-btn {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 46px;
+  font-size: 20px;
+  font-weight: 700;
+  animation: pulse 1.7s infinite;
+  z-index: 3;
+}
+
+
+.d-none {
+    display: none;
+}
+
+
