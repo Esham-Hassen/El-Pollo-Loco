@@ -6,6 +6,9 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    StatusBarCoins = new StatusBarCoins();
+    StatusBarBottle = new StatusBarBottle();
+
     throwableObjects = [];
 
 
@@ -13,7 +16,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.level = level1
+        this.level = level1;
         this.draw();
         this.setWorld();
         this.run();
@@ -47,6 +50,7 @@ class World {
             if ((this.character.isColliding(enemy))) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+                // this.StatusBarCoins.setPercentage(this.character.energy);
             }
         })
     }
@@ -64,7 +68,8 @@ class World {
         this.ctx.translate(-this.camera_x, 0); // Backward
         // Space for fixed objects.
         this.addToMap(this.statusBar);
-
+        this.addToMap(this.StatusBarCoins);
+        this.addToMap(this.StatusBarBottle);
 
 
         this.ctx.translate(this.camera_x, 0); // Forward
@@ -108,6 +113,7 @@ class World {
 
 
     addToMap(mo) {
+        if (!mo) return;
         if (mo.otherDirection) {
             this.flipImage(mo)
         }
