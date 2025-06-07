@@ -9,14 +9,17 @@ class World {
     StatusBarCoins = new StatusBarCoins();
     StatusBarBottle = new StatusBarBottle();
 
+    coins = [];
     throwableObjects = [];
-
+    testIfLevel2 = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level1;
+        this.addCoins();
+        // this.correctCoinPositions();
         this.draw();
         this.setWorld();
         this.run();
@@ -26,6 +29,16 @@ class World {
 
     setWorld() {
         this.character.world = this;
+    }
+
+
+    addCoins() {
+        let startX = 50;
+        for (let i = 0; i < 10; i++) {
+            let coin = new Coin();
+            coin.x = startX + i * 300;
+            this.coins.push(coin);
+        }
     }
 
 
@@ -63,6 +76,7 @@ class World {
 
 
         this.addObjectToMap(this.level.backgroundObjects);
+        this.addObjectToMap(this.coins);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0); // Backward
@@ -80,22 +94,6 @@ class World {
         this.addObjectToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
-
-
-
-        // this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-
-        // this.enemies.forEach((enemy) => {
-        //     this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height)
-        // });
-
-        // this.clouds.forEach((cloud) => {
-        //     this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height)
-        // });
-
-        // this.backgrounds.forEach((BackgroundObject) => {
-        //     this.ctx.drawImage(BackgroundObject.img, BackgroundObject.x, BackgroundObject.y, BackgroundObject.width, BackgroundObject.height)
-        // });
 
 
 

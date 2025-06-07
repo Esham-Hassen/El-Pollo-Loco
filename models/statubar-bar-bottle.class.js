@@ -22,14 +22,14 @@ class StatusBarBottle extends DrawableObject {
     }
 
 
-     setPercentage(collectedBottles) {
+    setPercentage(collectedBottles) {
         this.collectedBottles = collectedBottles; // ==> 0 - 5
         this.collectedBottles = Math.min(collectedBottles, 100);
         let path = this.IMAGES_STATUSBAR_BOTTLES[this.resolveImageIndex()]
         this.img = this.imageCache[path]
     }
 
-     resolveImageIndex() {
+    resolveImageIndex() {
         if (this.percentage >= 100) return 5;
         else if (this.percentage > 80) return 4;
         else if (this.percentage > 60) return 3;
