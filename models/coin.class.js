@@ -7,26 +7,19 @@ class Coin extends DrawableObject {
     ];
 
     constructor() {
-        // super();
-        // this.loadImage(this.IMAGES_COIN[0]);
-        // this.loadImages(this.IMAGES_COIN);
-        // this.height = 70;
-        // this.width = 65;
-        // this.x = 300 + Math.random() * 5000; 
-        // this.y = 50 + Math.random() * 300;
-
-        // this.animate();
-        // this.id = Coin.i++;
-
-         super();
+        super();
         this.loadImage(this.IMAGES_COIN[0]); // Initial image
         this.loadImages(this.IMAGES_COIN);   // Preload animation frames
 
-        this.width = 65;
-        this.height = 70;
+        this.width = 80;
+        this.height = 80;
 
-        this.x = 0; // will be set in World
-        this.y = 100 + Math.random() * 200;
+        // this.x = 0; 
+        // this.y = 100 + Math.random() * 200;
+
+    
+        this.x = 20 + Math.random() * 2000;
+        this.y = 150 + Math.random() * 150;
 
         this.animate();
     }

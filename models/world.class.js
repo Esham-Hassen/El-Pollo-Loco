@@ -6,20 +6,20 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    // StatusBarCoins = new StatusBarCoins();
     StatusBarCoins = new StatusBarCoins();
-    StatusBarBottle = new StatusBarBottle();
 
-    coins = [];
+    StatusBarBottle = new StatusBarBottle();
+    coinsCollected = 0;
     throwableObjects = [];
-    testIfLevel2 = false;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level1;
-        this.addCoins();
-        // this.correctCoinPositions();
+        // this.addCoins();
         this.draw();
         this.setWorld();
         this.run();
@@ -29,16 +29,6 @@ class World {
 
     setWorld() {
         this.character.world = this;
-    }
-
-
-    addCoins() {
-        let startX = 50;
-        for (let i = 0; i < 10; i++) {
-            let coin = new Coin();
-            coin.x = startX + i * 300;
-            this.coins.push(coin);
-        }
     }
 
 
@@ -63,9 +53,21 @@ class World {
             if ((this.character.isColliding(enemy))) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
-                // this.StatusBarCoins.setPercentage(this.character.energy);
             }
         })
+
+
+              // Coin collision
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(index, 1); // Remove coin from array
+                this.coinsCollected += 1;
+
+                // Each coin worth 10% (assuming 5 coins for 100%)
+                let newPercentage = this.coinsCollected * 10;
+                this.StatusBarCoins.setPercentage(newPercentage);
+            }
+        });
     }
 
 
@@ -76,7 +78,7 @@ class World {
 
 
         this.addObjectToMap(this.level.backgroundObjects);
-        this.addObjectToMap(this.coins);
+        this.addObjectToMap(this.level.coins);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0); // Backward
@@ -90,7 +92,7 @@ class World {
 
         this.addObjectToMap(this.level.enemies);
         this.addObjectToMap(this.level.clouds);
-
+    
         this.addObjectToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -117,7 +119,8 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+         mo.drawFrame(this.ctx);
+      
 
 
         if (mo.otherDirection) {
@@ -125,18 +128,30 @@ class World {
         }
     }
 
+    // flipImage(mo) {
+    //     this.ctx.save();
+    //     this.ctx.translate(mo.width, 0);
+    //     this.ctx.scale(-1, 1);
+    //     mo.x = mo.x * -1
+    // }
+
+
+    // flipImageBack(mo) {
+    //     mo.x = mo.x * -1;
+    //     this.ctx.restore();
+    // }
+
     flipImage(mo) {
-        this.ctx.save();
-        this.ctx.translate(mo.width, 0);
-        this.ctx.scale(-1, 1);
-        mo.x = mo.x * -1
-    }
+    this.ctx.save();
+    this.ctx.translate(mo.x + mo.width, mo.y);
+    this.ctx.scale(-1, 1);
+    this.ctx.translate(-mo.x, -mo.y); 
+}
 
+flipImageBack() {
+    this.ctx.restore();
+}
 
-    flipImageBack(mo) {
-        mo.x = mo.x * -1;
-        this.ctx.restore();
-    }
 
 }
 
