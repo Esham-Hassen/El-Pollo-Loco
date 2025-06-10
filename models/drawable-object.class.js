@@ -29,8 +29,9 @@ class DrawableObject {
         }
     }
 
+   
 
-      
+
 
 
     loadImages(arr) {

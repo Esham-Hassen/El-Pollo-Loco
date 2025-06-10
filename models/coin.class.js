@@ -1,33 +1,30 @@
-class Coin extends DrawableObject {
-    static i = 0;
+class Coin extends MovableObject {
+    height = 100;
+    width = 100;
 
     IMAGES_COIN = [
         'img/8_coin/coin_1.png',
         'img/8_coin/coin_2.png',
     ];
 
+    offset = {
+        top: 40,
+        bottom: 40,
+        left: 40,
+        right: 40,
+    };
+
     constructor() {
-        super();
-        this.loadImage(this.IMAGES_COIN[0]); // Initial image
-        this.loadImages(this.IMAGES_COIN);   // Preload animation frames
-
-        this.width = 80;
-        this.height = 80;
-
-        // this.x = 0; 
-        // this.y = 100 + Math.random() * 200;
-
-    
-        this.x = 20 + Math.random() * 2000;
-        this.y = 150 + Math.random() * 150;
-
+        super().loadImage(this.IMAGES_COIN[0]);
+        this.loadImages(this.IMAGES_COIN);
+        this.x = Math.floor(Math.random() * 1500) + 100;
+        this.y = Math.floor(Math.random() * 200) + 100;
         this.animate();
     }
 
     animate() {
         setInterval(() => {
-            this.currentImage = (this.currentImage + 1) % this.IMAGES_COIN.length;
-            this.img = this.imageCache[this.IMAGES_COIN[this.currentImage]];
-        }, 200);
+            this.playAnimation(this.IMAGES_COIN);
+        }, 400);
     }
 }

@@ -53,22 +53,29 @@ class World {
             if ((this.character.isColliding(enemy))) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+               
             }
         })
-
-
-              // Coin collision
-        this.level.coins.forEach((coin, index) => {
-            if (this.character.isColliding(coin)) {
-                this.level.coins.splice(index, 1); // Remove coin from array
-                this.coinsCollected += 1;
-
-                // Each coin worth 10% (assuming 5 coins for 100%)
-                let newPercentage = this.coinsCollected * 10;
-                this.StatusBarCoins.setPercentage(newPercentage);
-            }
-        });
+        this.checkCoinCollisions();
     }
+
+
+
+   checkCoinCollisions()  {
+    for (let i = this.level.coins.length - 1; i >= 0; i--) {
+        const coin = this.level.coins[i];
+
+        if (this.character.isColliding(coin)) {
+            this.level.coins.splice(i, 1); // Remove the coin
+            this.coinsCollected += 1;
+
+            // Update the coin status bar (each coin = 20%)
+            const newPercentage = this.coinsCollected * 20;
+            this.StatusBarCoins.setPercentage(newPercentage);
+        }
+    }
+}
+
 
 
     draw() {
@@ -92,7 +99,7 @@ class World {
 
         this.addObjectToMap(this.level.enemies);
         this.addObjectToMap(this.level.clouds);
-    
+
         this.addObjectToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -119,8 +126,8 @@ class World {
         }
 
         mo.draw(this.ctx);
-         mo.drawFrame(this.ctx);
-      
+        mo.drawFrame(this.ctx);
+
 
 
         if (mo.otherDirection) {
@@ -142,15 +149,15 @@ class World {
     // }
 
     flipImage(mo) {
-    this.ctx.save();
-    this.ctx.translate(mo.x + mo.width, mo.y);
-    this.ctx.scale(-1, 1);
-    this.ctx.translate(-mo.x, -mo.y); 
-}
+        this.ctx.save();
+        this.ctx.translate(mo.x + mo.width, mo.y);
+        this.ctx.scale(-1, 1);
+        this.ctx.translate(-mo.x, -mo.y);
+    }
 
-flipImageBack() {
-    this.ctx.restore();
-}
+    flipImageBack() {
+        this.ctx.restore();
+    }
 
 
 }
