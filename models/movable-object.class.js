@@ -28,6 +28,12 @@ class MovableObject extends DrawableObject {
 }
 }
 
+
+isOnGround() {
+    return this.y >= 180;
+}
+
+
 // old function
     // isColliding(mo) {
     //     return this.x + this.width > mo.x &&
@@ -104,8 +110,11 @@ isColliding(mo) {
 
 
     jump() {
-        this.speedY = 30;
+    if (this.isOnGround()) {
+        this.speedY = 30; 
     }
+}
+
 }
 
 

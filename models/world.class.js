@@ -34,10 +34,19 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollisions()
+            this.checkForJump();
+            this.checkCollisions();
             this.checkThrowObjects();
         }, 200)
     }
+
+
+    checkForJump() {
+        if (this.keyboard.SPACE && this.character.isOnGround()) {
+            this.character.jump();
+        }
+    }
+
 
 
     checkThrowObjects() {
@@ -53,7 +62,7 @@ class World {
             if ((this.character.isColliding(enemy))) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
-               
+
             }
         })
         this.checkCoinCollisions();
@@ -61,20 +70,20 @@ class World {
 
 
 
-   checkCoinCollisions()  {
-    for (let i = this.level.coins.length - 1; i >= 0; i--) {
-        const coin = this.level.coins[i];
+    checkCoinCollisions() {
+        for (let i = this.level.coins.length - 1; i >= 0; i--) {
+            const coin = this.level.coins[i];
 
-        if (this.character.isColliding(coin)) {
-            this.level.coins.splice(i, 1); // Remove the coin
-            this.coinsCollected += 1;
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(i, 1); // Remove the coin
+                this.coinsCollected += 1;
 
-            // Update the coin status bar (each coin = 20%)
-            const newPercentage = this.coinsCollected * 20;
-            this.StatusBarCoins.setPercentage(newPercentage);
+                // Update the coin status bar (each coin = 20%)
+                const newPercentage = this.coinsCollected * 20;
+                this.StatusBarCoins.setPercentage(newPercentage);
+            }
         }
     }
-}
 
 
 

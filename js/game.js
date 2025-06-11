@@ -73,7 +73,7 @@ window.addEventListener("keyup", (event) => {
     }
 
 
-    if (event.keyCode32) {
+    if (event.keyCode == 32) {
         keyboard.SPACE = false;
     }
 
