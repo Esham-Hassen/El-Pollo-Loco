@@ -19,7 +19,6 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level1;
-        // this.addCoins();
         this.draw();
         this.setWorld();
         this.run();
@@ -35,7 +34,9 @@ class World {
     run() {
         setInterval(() => {
             this.checkForJump();
-            this.checkCollisions();
+            //  this.checkCollisions();
+             this.checkCharacterEnemyCollisions();
+             this.checkCoinCollisions();
             this.checkThrowObjects();
         }, 200)
     }
@@ -48,6 +49,14 @@ class World {
     }
 
 
+    characterJumpToKill(enemy) {
+        return this.character.isColliding(enemy) &&
+            this.character.speedY > 0; // Falling down
+    }
+
+
+
+
 
     checkThrowObjects() {
         if (this.keyboard.D) {
@@ -57,16 +66,38 @@ class World {
     }
 
 
-    checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if ((this.character.isColliding(enemy))) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+    // checkCollisions() {
+    //     this.level.enemies.forEach((enemy) => {
+    //         if ((this.character.isColliding(enemy))) {
+    //             this.character.hit();
+    //             this.statusBar.setPercentage(this.character.energy);
 
+    //         }
+    //     })
+    //     this.checkCoinCollisions();
+    // }
+
+
+    checkCharacterEnemyCollisions() {
+    this.level.enemies.forEach((enemy) => {
+        if (this.characterJumpToKill(enemy)) {
+            if (enemy instanceof Chicken || enemy instanceof Chick) {
+                enemy.Die(); 
+                this.character.speedY =-15; // bounce up
+                setTimeout(() => {
+                    enemy.isSplicable = true;
+                }, 200);
             }
-        })
-        this.checkCoinCollisions();
-    }
+        } else if (this.character.isColliding(enemy) && !enemy.isDead()) {
+             this.character.hit();
+        }
+    });
+
+    // Clean up removed enemies
+    this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
+}
+
+
 
 
 
@@ -75,10 +106,8 @@ class World {
             const coin = this.level.coins[i];
 
             if (this.character.isColliding(coin)) {
-                this.level.coins.splice(i, 1); // Remove the coin
+                this.level.coins.splice(i, 1);
                 this.coinsCollected += 1;
-
-                // Update the coin status bar (each coin = 20%)
                 const newPercentage = this.coinsCollected * 20;
                 this.StatusBarCoins.setPercentage(newPercentage);
             }
@@ -167,8 +196,6 @@ class World {
     flipImageBack() {
         this.ctx.restore();
     }
-
-
 }
 
 

@@ -67,14 +67,25 @@ isColliding(mo) {
 
 
 
+    // hit() {
+    //     this.energy -= 5;
+    //     if (this.energy < 0) {
+    //         this.energy = 0;
+    //     } else {
+    //         this.lastHit = new Date().getTime();
+    //     }
+    // }
+
     hit() {
-        this.energy -= 5;
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-        }
-    }
+  if (this.energy > 0) {
+    this.energy -= 5;
+    this.lastHit = new Date().getTime();
+  }
+
+  if (this.energy < 0) {
+    this.energy = 0;
+  }
+}
 
 
     isHurt() {
@@ -88,6 +99,13 @@ isColliding(mo) {
     isDead() {
         return this.energy == 0;
     }
+
+
+    Die() {
+    this.energy = 0;
+    this.speedX = 0;
+}
+
 
 
     playAnimation(images) {
