@@ -1,6 +1,6 @@
 class World {
     character = new Character();
-    // level = level1;
+    //  level = level1;
     canvas;
     ctx;
     keyboard;
@@ -35,8 +35,8 @@ class World {
         setInterval(() => {
             this.checkForJump();
             //  this.checkCollisions();
-             this.checkCharacterEnemyCollisions();
-             this.checkCoinCollisions();
+            this.checkCharacterEnemyCollisions();
+            this.checkCoinCollisions();
             this.checkThrowObjects();
         }, 200)
     }
@@ -79,23 +79,23 @@ class World {
 
 
     checkCharacterEnemyCollisions() {
-    this.level.enemies.forEach((enemy) => {
-        if (this.characterJumpToKill(enemy)) {
-            if (enemy instanceof Chicken || enemy instanceof Chick) {
-                enemy.Die(); 
-                this.character.speedY =-15; // bounce up
-                setTimeout(() => {
-                    enemy.isSplicable = true;
-                }, 200);
+        this.level.enemies.forEach((enemy) => {
+            if (this.characterJumpToKill(enemy)) {
+                if (enemy instanceof Chicken || enemy instanceof Chick) {
+                    enemy.Die();
+                    this.character.speedY = -15; // bounce up
+                    setTimeout(() => {
+                        enemy.isSplicable = true;
+                    }, 200);
+                }
+            } else if (this.character.isColliding(enemy) && !enemy.isDead()) {
+                this.character.hit();
             }
-        } else if (this.character.isColliding(enemy) && !enemy.isDead()) {
-             this.character.hit();
-        }
-    });
+        });
 
-    // Clean up removed enemies
-    this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
-}
+        // Clean up removed enemies
+        this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
+    }
 
 
 
@@ -124,6 +124,7 @@ class World {
 
         this.addObjectToMap(this.level.backgroundObjects);
         this.addObjectToMap(this.level.coins);
+        this.addObjectToMap(this.level.bottles);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0); // Backward
@@ -151,6 +152,7 @@ class World {
     }
 
     addObjectToMap(objects) {
+         if (!objects) return;
         objects.forEach(object => {
             this.addToMap(object)
         });
