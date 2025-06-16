@@ -62,11 +62,6 @@ isColliding(mo) {
 }
 
 
-
-
-
-
-
     // hit() {
     //     this.energy -= 5;
     //     if (this.energy < 0) {
@@ -75,6 +70,7 @@ isColliding(mo) {
     //         this.lastHit = new Date().getTime();
     //     }
     // }
+
 
     hit() {
   if (this.energy > 0) {
@@ -103,7 +99,7 @@ isColliding(mo) {
 
     Die() {
     this.energy = 0;
-    this.speedX = 0;
+    this.playDeathAnimation();
 }
 
 

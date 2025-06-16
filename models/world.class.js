@@ -81,7 +81,7 @@ class World {
     checkCharacterEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.characterJumpToKill(enemy)) {
-                if (enemy instanceof Chicken || enemy instanceof Chick) {
+                if (enemy instanceof Chicken || enemy instanceof Coin) {
                     enemy.Die();
                     this.character.speedY = -15; // bounce up
                     setTimeout(() => {
@@ -90,6 +90,7 @@ class World {
                 }
             } else if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 this.character.hit();
+                  this.statusBar.setPercentage(this.character.energy);
             }
         });
 
