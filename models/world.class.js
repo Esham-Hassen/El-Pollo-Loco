@@ -11,6 +11,7 @@ class World {
 
     StatusBarBottle = new StatusBarBottle();
     coinsCollected = 0;
+    bottlesCollected = 0;
     throwableObjects = [];
 
 
@@ -34,12 +35,18 @@ class World {
     run() {
         setInterval(() => {
             this.checkForJump();
-            //  this.checkCollisions();
-            this.checkCharacterEnemyCollisions();
-            this.checkCoinCollisions();
+            this.checkAllCollisions();
             this.checkThrowObjects();
         }, 200)
     }
+
+
+    checkAllCollisions() {
+        this.checkCharacterEnemyCollisions();
+        this.checkCoinCollisions();
+        this.checkBottleCollisions(); 
+    }
+
 
 
     checkForJump() {
@@ -90,7 +97,7 @@ class World {
                 }
             } else if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 this.character.hit();
-                  this.statusBar.setPercentage(this.character.energy);
+                this.statusBar.setPercentage(this.character.energy);
             }
         });
 
@@ -114,6 +121,20 @@ class World {
             }
         }
     }
+
+
+
+    checkBottleCollisions() {
+    for (let i = this.level.bottles.length - 1; i >= 0; i--) {
+        const bottle = this.level.bottles[i];
+
+        if (this.character.isColliding(bottle)) {
+            this.level.bottles.splice(i, 1);
+            this.bottlesCollected += 1;
+            this.StatusBarBottle.setPercentage(this.bottlesCollected);
+        }
+    }
+}
 
 
 
@@ -153,7 +174,7 @@ class World {
     }
 
     addObjectToMap(objects) {
-         if (!objects) return;
+        if (!objects) return;
         objects.forEach(object => {
             this.addToMap(object)
         });

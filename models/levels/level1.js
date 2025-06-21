@@ -28,11 +28,11 @@ function initLevel() {
             new Bottle(800, 357),
             new Bottle(1100, 351),
             new Bottle(1400, 350),
-            new Bottle(1700, 354),
-            new Bottle(1850, 351),
-            new Bottle(1900, 355),
-            new Bottle(2000, 350),
-            new Bottle(2050, 352),
+            // new Bottle(1700, 354),
+            // new Bottle(1850, 351),
+            // new Bottle(1900, 355),
+            // new Bottle(2000, 350),
+            // new Bottle(2050, 352),
         ],
 
 
