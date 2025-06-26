@@ -136,8 +136,12 @@ class Character extends MovableObject {
     ];
 
     world;
-    walking_sound = new Audio('audio/walk.mp3');
+    walking_sound = new Audio('audio/walking.mp3');
+    coin_sound = new Audio('audio/coins.mp3');
     isWalkingSoundPlaying = false;
+
+
+
 
     movementIntervalId = null;
     animationIntervalId = null;
@@ -151,6 +155,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_isHurt);
         this.applyGravity();
 
+        this.walking_sound.loop = true;
         // Start intervals
         this.start();
     }
@@ -241,7 +246,14 @@ class Character extends MovableObject {
         if (this.isWalkingSoundPlaying) {
             this.walking_sound.pause();
             this.walking_sound.currentTime = 0; // reset audio
-            this.isWalkingSoundPlaying = false;
+
         }
+        this.isWalkingSoundPlaying = false;
+    }
+
+    playCoinSound() {
+        this.coin_sound.pause();
+        this.coin_sound.currentTime = 0;
+        this.coin_sound.play();
     }
 }

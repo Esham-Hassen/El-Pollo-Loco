@@ -44,7 +44,7 @@ class World {
     checkAllCollisions() {
         this.checkCharacterEnemyCollisions();
         this.checkCoinCollisions();
-        this.checkBottleCollisions(); 
+        this.checkBottleCollisions();
     }
 
 
@@ -93,7 +93,7 @@ class World {
                     this.character.speedY = -15; // bounce up
                     setTimeout(() => {
                         enemy.isSplicable = true;
-                    }, 200);
+                    }, 300);
                 }
             } else if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 this.character.hit();
@@ -118,6 +118,7 @@ class World {
                 this.coinsCollected += 1;
                 const newPercentage = this.coinsCollected * 20;
                 this.StatusBarCoins.setPercentage(newPercentage);
+                this.character.playCoinSound();
             }
         }
     }
@@ -125,16 +126,16 @@ class World {
 
 
     checkBottleCollisions() {
-    for (let i = this.level.bottles.length - 1; i >= 0; i--) {
-        const bottle = this.level.bottles[i];
+        for (let i = this.level.bottles.length - 1; i >= 0; i--) {
+            const bottle = this.level.bottles[i];
 
-        if (this.character.isColliding(bottle)) {
-            this.level.bottles.splice(i, 1);
-            this.bottlesCollected += 1;
-            this.StatusBarBottle.setPercentage(this.bottlesCollected);
+            if (this.character.isColliding(bottle)) {
+                this.level.bottles.splice(i, 1);
+                this.bottlesCollected += 1;
+                this.StatusBarBottle.setPercentage(this.bottlesCollected);
+            }
         }
     }
-}
 
 
 
