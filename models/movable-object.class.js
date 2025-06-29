@@ -72,16 +72,37 @@ isColliding(mo) {
     // }
 
 
-    hit() {
-  if (this.energy > 0) {
-    this.energy -= 5;
-    this.lastHit = new Date().getTime();
-  }
+    //updated
+//     hit() {
+//   if (this.energy > 0) {
+//     this.energy -= 5;
+//     this.lastHit = new Date().getTime();
+//   }
 
-  if (this.energy < 0) {
-    this.energy = 0;
-  }
+//   if (this.energy < 0) {
+//     this.energy = 0;
+//   }
+// }
+
+// new
+hit() {
+    const now = new Date().getTime();
+    const timeSinceLastHit = now - this.lastHit;
+
+    if (this.energy > 0 && timeSinceLastHit > 1000) { // 1 second cooldown
+        this.energy -= 5;
+        this.lastHit = now;
+
+        if (this instanceof Character) {
+            this.playHurtSound(); 
+        }
+    }
+
+    if (this.energy < 0) {
+        this.energy = 0;
+    }
 }
+
 
 
     isHurt() {

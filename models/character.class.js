@@ -138,6 +138,8 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio('audio/walking.mp3');
     coin_sound = new Audio('audio/coins.mp3');
+    bottle_sound = new Audio('audio/bottle.mp3');
+    hurt_sound = new Audio('audio/hurt.mp3');
     isWalkingSoundPlaying = false;
 
 
@@ -256,4 +258,21 @@ class Character extends MovableObject {
         this.coin_sound.currentTime = 0;
         this.coin_sound.play();
     }
+
+
+    playBottleSound() {
+        this.bottle_sound.pause();
+        this.bottle_sound.currentTime = 0;
+        this.bottle_sound.play();
+    }
+
+
+    
+   playHurtSound() {
+    this.hurt_sound.pause();
+    this.hurt_sound.currentTime = 0;
+    this.hurt_sound.play();
+}
+
+
 }

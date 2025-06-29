@@ -133,6 +133,7 @@ class World {
                 this.level.bottles.splice(i, 1);
                 this.bottlesCollected += 1;
                 this.StatusBarBottle.setPercentage(this.bottlesCollected);
+                this.character.playBottleSound();
             }
         }
     }
