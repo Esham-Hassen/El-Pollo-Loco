@@ -14,7 +14,6 @@ class World {
     bottlesCollected = 0;
     throwableObjects = [];
 
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -56,10 +55,13 @@ class World {
     }
 
 
+
+
     characterJumpToKill(enemy) {
         return this.character.isColliding(enemy) &&
             this.character.speedY > 0; // Falling down
     }
+
 
 
 
@@ -105,7 +107,7 @@ class World {
         this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
     }
 
-
+   
 
 
 

@@ -147,6 +147,7 @@ hit() {
     jump() {
     if (this.isOnGround()) {
         this.speedY = 30; 
+         this.playJumpSound();
     }
 }
 

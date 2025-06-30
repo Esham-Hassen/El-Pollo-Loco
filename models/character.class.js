@@ -140,6 +140,7 @@ class Character extends MovableObject {
     coin_sound = new Audio('audio/coins.mp3');
     bottle_sound = new Audio('audio/bottle.mp3');
     hurt_sound = new Audio('audio/hurt.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
     isWalkingSoundPlaying = false;
 
 
@@ -267,12 +268,17 @@ class Character extends MovableObject {
     }
 
 
-    
-   playHurtSound() {
-    this.hurt_sound.pause();
-    this.hurt_sound.currentTime = 0;
-    this.hurt_sound.play();
-}
+
+    playHurtSound() {
+        this.hurt_sound.pause();
+        this.hurt_sound.currentTime = 0;
+        this.hurt_sound.play();
+    }
 
 
+    playJumpSound() {
+        this.jump_sound.pause();
+        this.jump_sound.currentTime = 0;
+        this.jump_sound.play();
+    }
 }
