@@ -74,7 +74,6 @@ class World {
         }
     }
 
-
     // checkCollisions() {
     //     this.level.enemies.forEach((enemy) => {
     //         if ((this.character.isColliding(enemy))) {
@@ -107,7 +106,7 @@ class World {
         this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
     }
 
-   
+
 
 
 
