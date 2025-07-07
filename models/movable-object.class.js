@@ -125,6 +125,7 @@ hit() {
 
 
 
+
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];

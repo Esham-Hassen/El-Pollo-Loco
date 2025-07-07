@@ -138,7 +138,7 @@ class World {
             }
         }
     }
-
+    
 
 
     draw() {
