@@ -13,6 +13,7 @@ class World {
     coinsCollected = 0;
     bottlesCollected = 0;
     throwableObjects = [];
+    MAX_BOTTLES = 5;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -66,11 +67,21 @@ class World {
 
 
 
+    //OLD
+    // checkThrowObjects() {
+    //     if (this.keyboard.D) {
+    //         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+    //         this.throwableObjects.push(bottle);
+    //     }
+    // }
+
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.bottlesCollected > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.bottlesCollected--;
+            this.StatusBarBottle.setPercentage(this.bottlesCollected);
         }
     }
 
@@ -125,20 +136,34 @@ class World {
     }
 
 
+    //OLD
+    // checkBottleCollisions() {
+    //     for (let i = this.level.bottles.length - 1; i >= 0; i--) {
+    //         const bottle = this.level.bottles[i];
+
+    //         if (this.character.isColliding(bottle)) {
+    //             this.level.bottles.splice(i, 1);
+    //             this.bottlesCollected += 1;
+    //             this.StatusBarBottle.setPercentage(this.bottlesCollected);
+    //             this.character.playBottleSound();
+    //         }
+    //     }
+    // }
 
     checkBottleCollisions() {
-        for (let i = this.level.bottles.length - 1; i >= 0; i--) {
-            const bottle = this.level.bottles[i];
-
+        this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.level.bottles.splice(i, 1);
-                this.bottlesCollected += 1;
-                this.StatusBarBottle.setPercentage(this.bottlesCollected);
-                this.character.playBottleSound();
+                this.level.bottles.splice(index, 1); // remove bottle from level
+                if (this.bottlesCollected < this.MAX_BOTTLES) {
+                    this.bottlesCollected++;
+                    this.StatusBarBottle.setPercentage(this.bottlesCollected);
+                    this.character.playBottleSound();
+                }
             }
-        }
+        });
     }
-    
+
+
 
 
     draw() {
