@@ -14,6 +14,7 @@ class World {
     bottlesCollected = 0;
     throwableObjects = [];
     MAX_BOTTLES = 5;
+    endboss = new Endboss();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,6 +38,7 @@ class World {
             this.checkForJump();
             this.checkAllCollisions();
             this.checkThrowObjects();
+            this.checkBottleHitsEndboss();
         }, 200)
     }
 
@@ -162,6 +164,18 @@ class World {
             }
         });
     }
+
+
+    checkBottleHitsEndboss() {
+        this.throwableObjects.forEach((bottle, index) => {
+            if (this.endboss.isColliding(bottle)) {
+                console.log('Bottle hit endboss!');
+                this.endboss.hit(); // deal damage
+                this.throwableObjects.splice(index, 1); // remove bottle
+            }
+        });
+    }
+
 
 
 
