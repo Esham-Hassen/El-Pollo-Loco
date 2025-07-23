@@ -3,7 +3,8 @@ class Endboss extends MovableObject {
     width = 250;
     y = 60;
     health = 100;
-   
+    isDead = false;
+      isSplicable = false;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -54,28 +55,48 @@ class Endboss extends MovableObject {
     //     }, 200)
     // }
 
+  
+
     animate() {
-        this.walkInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING)
-        }, 200);
-    }
-   
+    this.walkInterval = setInterval(() => {
+        if (!this.isDead) {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }, 200);
+}
 
 
-     hit(damage = 20) {
-        this.health -= damage;
+    takeDamage(amount = 20) {
+        console.log('Endboss takes damage:', amount, 'Health before:', this.health);
+        this.health -= amount;
+        console.log('Health after:', this.health);
+
         if (this.health <= 0) {
             this.die();
         }
     }
 
 
+    // die() {
+    //     clearInterval(this.walkInterval); // Stop walking animation
+    //     this.playAnimation(this.IMAGES_DEAD); // Play dead animation
+    // }
 
+    
     die() {
-        clearInterval(this.walkInterval); // Stop walking animation
-        this.playAnimation(this.IMAGES_DEAD); // Play dead animation
-    }
-   
+        this.isDead = true;
+        clearInterval(this.walkInterval);
 
+        let i = 0;
+        this.deathInterval = setInterval(() => {
+            if (i < this.IMAGES_DEAD.length) {
+                this.img = this.imageCache[this.IMAGES_DEAD[i]];
+                i++;
+            } else {
+                clearInterval(this.deathInterval);
+                this.isSplicable = true;
+            }
+        }, 200);
+    }
 
 }

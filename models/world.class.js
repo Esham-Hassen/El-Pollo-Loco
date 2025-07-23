@@ -165,18 +165,18 @@ class World {
         });
     }
 
-
+//original
     checkBottleHitsEndboss() {
         this.throwableObjects.forEach((bottle, index) => {
             if (this.endboss.isColliding(bottle)) {
                 console.log('Bottle hit endboss!');
-                this.endboss.hit(); // deal damage
+                this.endboss.takeDamage(); // deal damage
                 this.throwableObjects.splice(index, 1); // remove bottle
             }
         });
     }
 
-
+    
 
 
 
